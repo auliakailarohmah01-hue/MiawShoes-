@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiawShoes — Step Into Elegance</title>
+
+  <!-- Bootstrap & Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Custom Styles -->
+  <style>
+    /* General */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #fdfaf5;
+      color: #4b2e1e;
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: #8b5e3c;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+/* Navbar */
+nav.navbar {
+  background: rgba(255,250,245,0.95);
+  box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+  backdrop-filter: blur(8px);
+  padding:0.7rem 1rem;
+}
+.navbar-brand {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: #8b5e3c !important;
+  font-size:1.6rem;
+}
+.nav-link {
+  color: #4b2e1e !important;
+  font-weight:500;
+  transition:0.3s;
+  margin:0 8px;
+}
+.nav-link:hover { color: #b97a56 !important; }
+
+.navbar-icons {
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-left:25px;
+  position:relative;
+}
+
+/* Chat & Cart Buttons (chubby style) */
+.chat-chubby, .cart-chubby {
+  background:#fbeee6;
+  border-radius:50%;
+  width:50px;
+  height:50px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.4rem;
+  color:#8b5e3c;
+  text-decoration:none;
+  transition: all 0.3s ease;
+  box-shadow:0 4px 15px rgba(0,0,0,0.08);
+  position: relative;
+}
+.chat-chubby:hover, .cart-chubby:hover {
+  background:#fff5eb;
+  transform:scale(1.1);
+  color:#b97a56;
+}
+
+/* Cart count badge */
+.cart-count {
+  position:absolute;
+  top:6px;
+  right:6px;
+  background:#b97a56;
+  color:white;
+  font-size:0.8rem;
+  font-weight:600;
+  padding:3px 7px;
+  border-radius:12px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+    /* Cart Popup */
+    .cart-popup {
+      display:none;
+      position:absolute;
+      top:65px;
+      right:0;
+      width:300px;
+      background:#fffaf2;
+      border-radius:10px;
+      box-shadow:0 4px 25px rgba(0,0,0,0.15);
+      padding:15px;
+      z-index:1000;
+    }
+    .cart-popup .cart-title { font-weight:600; margin-bottom:10px; color:#8b5e3c; }
+    .cart-item {
+      display:flex;
+      align-items:center;
+      margin-bottom:12px;
+      gap:10px;
+    }
+    .cart-item img {
+      width:55px;
+      height:55px;
+      border-radius:8px;
+      object-fit:cover;
+    }
+    .cart-total {
+      border-top:1px solid #e4d5c3;
+      padding-top:8px;
+      font-weight:600;
+      color:#4b2e1e;
+    }
+    .checkout-btn {
+      display:block;
+      text-align:center;
+      margin-top:10px;
+      background:#8b5e3c;
+      color:#fff;
+      border-radius:25px;
+      padding:8px 0;
+      font-weight:600;
+      text-decoration:none;
+    }
+    .checkout-btn:hover { background:#6e452c; }
+
+    /* Header */
+    header.masthead {
+      position:relative;
+      background:url('assets/img/bg-sep.jpg') center/cover no-repeat;
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      color:white;
+    }
+    header.masthead::before {
+      content:'';
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.35);
+    }
+    header h1 {
+      font-family:'Playfair Display', serif;
+      font-size:4rem;
+      letter-spacing:2px;
+      position:relative;
+      z-index:1;
+    }
+    header p {
+      position:relative;
+      z-index:1;
+      max-width:650px;
+      font-size:1.2rem;
+      margin:20px auto 30px auto;
+    }
+    header .btn-primary {
+      z-index:1;
+      background:linear-gradient(45deg,#d6a56b,#8b5e3c);
+      border:none;
+      padding:12px 28px;
+      border-radius:30px;
+      font-weight:600;
+      color:#fff;
+      transition:0.3s;
+    }
+
+    /* Product Section */
+    .product-card {
+      border:none;
+      border-radius:12px;
+      overflow:hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background:#fff;
+    }
+    .product-card:hover {
+      transform:translateY(-6px);
+      box-shadow:0 8px 25px rgba(0,0,0,0.1);
+    }
+    .product-card img { height:260px; object-fit:cover; }
+    .product-info { padding:1rem; text-align:center; }
+    .product-info .btn {
+      background:#8b5e3c;
+      color:#fff;
+      border-radius:20px;
+      padding:6px 18px;
+      margin-top:5px;
+    }
+    .product-info .btn:hover { background:#6e452c; }
+
+    /* Footer & Responsive same as before... */
+  </style>
+</head>
+<body>
+
+<!-- ...semua struktur HTML kamu persis seperti sebelumnya... -->
+<!-- (About, Collection, Testimonials, dan Footer TIDAK DIUBAH SAMA SEKALI) -->
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a class="navbar-brand fw-bold" href="#home">MiawShoes 👟🐾</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" id="navMenu">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#collection">Collection</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonials">Reviews</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="navbar-icons">
+      <a href="https://wa.me/6281234567890" target="_blank" class="chat-chubby" title="Chat with MiawShoes 💬">
+        <i class="fas fa-comment-dots"></i>
+      </a>
+
+<!-- 🛒 CART DROPDOWN -->
+<div class="cart-dropdown">
+  <a href="#" class="cart-chubby" id="cartIcon" title="Your Cart">
+    <i class="fas fa-shopping-cart fa-lg"></i>
+    <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">0</span>
+  </a>
+
+  <!-- CART POPUP -->
+  <div class="cart-popup" id="cartPopup">
+    <h6 class="cart-title">Keranjangmu 🛒</h6>
+    <p id="cart-summary" class="text-center small text-muted mb-2">0 produk di keranjang</p>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-total">
+      <p><strong>Total:</strong> <span id="cartTotal">Rp 0</span></p>
+    </div>
+    <a href="checkout.html" class="checkout-btn">Lanjut ke Checkout</a>
+  </div>
+</div>
+
+<style>
+.cart-popup {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 340px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 15px;
+  z-index: 1000;
+}
+.cart-popup.show { display: block; }
+.cart-title { text-align:center; font-weight:700; color:#ff8c00; margin-bottom:6px; }
+.cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  border-bottom: 1px dashed #eee;
+  padding-bottom: 10px;
+}
+.item-img {
+  width: 60px; height: 60px; border-radius:8px; object-fit:cover; margin-right:10px;
+}
+.item-info { flex: 1; }
+.item-info h6 { margin:0; font-size:14px; font-weight:700; }
+.item-info p { margin:0; color:#666; font-size:13px; }
+.item-actions { text-align: right; }
+.qty-control {
+  display: flex; align-items: center; justify-content: flex-end;
+}
+.qty-btn {
+  border: none; background: #ffe599; border-radius: 6px;
+  width: 24px; height: 24px; line-height: 1;
+  font-weight: 700; cursor: pointer; color:#333;
+}
+.qty-btn:hover { background: #ffcc66; }
+.qty-control span {
+  width: 24px; text-align: center; display: inline-block;
+}
+.remove {
+  display: inline-block; font-size: 12px; color: #e74c3c;
+  margin-top: 5px; cursor: pointer;
+}
+.remove:hover { text-decoration: underline; }
+.cart-total {
+  text-align: right;
+  border-top: 1px dashed #eee;
+  margin-top: 10px; padding-top: 10px;
+}
+.checkout-btn {
+  display: block;
+  background: #ffcc66;
+  color: #333;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  margin-top: 10px;
+  text-decoration: none;
+}
+.checkout-btn:hover {
+  background: #ffb84d;
+  color: #000;
+}
+</style>
+
+<script>
+// ---------- UTIL ----------
+function formatRp(angka){
+  return 'Rp ' + angka.toLocaleString('id-ID');
+}
+function getCart(){
+  return JSON.parse(localStorage.getItem('cart') || '[]');
+}
+function saveCart(cart){
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartUI();
+}
+
+// ---------- TAMBAH KE CART ----------
+function addToCart(product){
+  const cart = getCart();
+  const existing = cart.find(i => i.name === product.name && i.size === product.size);
+  if(existing) existing.quantity += product.quantity;
+  else cart.push(product);
+  saveCart(cart);
+  alert("✅ Produk ditambahkan ke keranjang!");
+}
+
+// ---------- UPDATE UI ----------
+function updateCartUI(){
+  const cart = getCart();
+  const cartItems = document.getElementById("cartItems");
+  const totalEl = document.getElementById("cartTotal");
+  const countEl = document.getElementById("cart-count");
+  const summaryEl = document.getElementById("cart-summary");
+
+  cartItems.innerHTML = "";
+  let total = 0;
+  let count = 0;
+
+  if(cart.length === 0){
+    cartItems.innerHTML = '<p style="text-align:center;color:#888;">Keranjang kosong 😿</p>';
+    summaryEl.textContent = "0 produk di keranjang";
+  } else {
+    cart.forEach((item, idx) => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+      count += item.quantity;
+
+      const div = document.createElement("div");
+      div.classList.add("cart-item");
+      div.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" class="item-img">
+        <div class="item-info">
+          <h6>${item.name}</h6>
+          <p>${formatRp(item.price)} / item</p>
+          <label class="item-size">Ukuran:
+            <select data-idx="${idx}" class="size-select">
+              ${["36","37","38","39","40"].map(s=>`<option value="${s}" ${s==item.size?'selected':''}>${s}</option>`).join("")}
+            </select>
+          </label>
+        </div>
+        <div class="item-actions">
+          <div class="qty-control">
+            <button class="qty-btn decrease" data-idx="${idx}">−</button>
+            <span>${item.quantity}</span>
+            <button class="qty-btn increase" data-idx="${idx}">+</button>
+          </div>
+          <p class="item-total">${formatRp(itemTotal)}</p>
+          <span class="remove" data-idx="${idx}"><i class="fas fa-trash"></i> Hapus</span>
+        </div>
+      `;
+      cartItems.appendChild(div);
+    });
+    summaryEl.textContent = `${count} produk di keranjang`;
+  }
+
+  totalEl.textContent = formatRp(total);
+  countEl.textContent = count;
+
+  // Tombol + / -
+  document.querySelectorAll(".increase").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const idx = btn.dataset.idx;
+      const c = getCart();
+      c[idx].quantity++;
+      saveCart(c);
+    });
+  });
+
+  document.querySelectorAll(".decrease").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const idx = btn.dataset.idx;
+      const c = getCart();
+      if(c[idx].quantity>1) c[idx].quantity--;
+      else c.splice(idx,1);
+      saveCart(c);
+    });
+  });
+
+  // Ubah ukuran
+  document.querySelectorAll(".size-select").forEach(sel=>{
+    sel.addEventListener("change",()=>{
+      const idx = sel.dataset.idx;
+      const c = getCart();
+      c[idx].size = sel.value;
+      saveCart(c);
+    });
+  });
+
+  // Hapus item
+  document.querySelectorAll(".remove").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const idx = btn.dataset.idx;
+      const c = getCart();
+      c.splice(idx,1);
+      saveCart(c);
+    });
+  });
+}
+
+// ---------- TAMPILKAN POPUP ----------
+const cartIcon = document.getElementById("cartIcon");
+const cartPopup = document.getElementById("cartPopup");
+cartIcon.addEventListener("click", (e)=>{
+  e.preventDefault();
+  cartPopup.classList.toggle("show");
+});
+
+// ---------- LOAD AWAL ----------
+document.addEventListener("DOMContentLoaded", updateCartUI);
+
+// ---------- CONTOH ADD TO CART ----------
+/*
+addToCart({
+  name: "PawLite Runner",
+  price: 599000,
+  size: "37",
+  quantity: 1,
+  image: "assets/img/pawlite-runner.jpg"
+});
+*/
+</script>
+
+
+<style>
+  .cart-popup {
+    position: fixed;
+    right: 30px;
+    top: 90px;
+    width: 380px;
+    background: #fff8ec;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    z-index: 1050;
+    font-family: 'Poppins', sans-serif;
+    display: none; /* ubah ke flex saat ditampilkan */
+    flex-direction: column;
+    animation: slideInCart 0.4s ease;
+  }
+
+  .cart-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: #a37444;
+    margin-bottom: 15px;
+  }
+
+  .cart-items {
+    max-height: 280px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+  }
+
+  .cart-item {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    gap: 10px;
+  }
+
+  .item-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+
+  .item-info {
+    flex: 1;
+  }
+
+  .item-name {
+    font-size: 0.95rem;
+    color: #5a3b28;
+    margin-bottom: 3px;
+  }
+
+  .item-price {
+    font-size: 0.9rem;
+    color: #7b583e;
+    margin-bottom: 4px;
+  }
+
+  .item-size {
+    font-size: 0.85rem;
+    color: #7b583e;
+  }
+
+  .item-size select {
+    border: 1px solid #e0c7a8;
+    border-radius: 6px;
+    padding: 2px 6px;
+    background: #fffaf2;
+    font-size: 0.85rem;
+  }
+
+  .item-actions {
+    text-align: right;
+  }
+
+  .qty-control {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+  }
+
+  .qty-btn {
+    border: none;
+    background: #f3d4a0;
+    color: #5a3b28;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .qty-btn:hover {
+    background: #eac28e;
+  }
+
+  .item-total {
+    font-size: 0.9rem;
+    color: #8b5e3c;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  .remove {
+    display: block;
+    color: #c96b46;
+    font-size: 0.85rem;
+    margin-top: 3px;
+    text-decoration: none;
+  }
+
+  .remove:hover {
+    text-decoration: underline;
+  }
+
+  .cart-total {
+    text-align: right;
+    border-top: 1px solid #e5d3b5;
+    padding-top: 10px;
+    color: #5a3b28;
+    font-weight: 600;
+  }
+
+  .checkout-btn {
+    display: block;
+    text-align: center;
+    background: linear-gradient(45deg, #f3c76a, #d6a56b);
+    color: white;
+    border-radius: 25px;
+    padding: 12px 0;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 15px;
+    transition: 0.3s ease;
+  }
+
+  .checkout-btn:hover {
+    background: linear-gradient(45deg, #d6a56b, #f3c76a);
+    box-shadow: 0 8px 18px rgba(214,165,107,0.4);
+    transform: translateY(-2px);
+  }
+
+  @keyframes slideInCart {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Scrollbar lembut */
+  .cart-items::-webkit-scrollbar {
+    width: 6px;
+  }
+  .cart-items::-webkit-scrollbar-thumb {
+    background-color: #e0c7a8;
+    border-radius: 10px;
+  }
+</style>
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<header class="masthead" id="home">
+  <h1>Walk Confidently</h1>
+  <p>Discover the perfect blend of comfort and style — inspired by the agility of a cat.</p>
+  <a href="#collection" class="btn btn-primary">Shop Now</a>
+</header>
+
+<!-- About Section -->
+<section id="about" class="py-5" style="background:#fffaf2;">
+  <div class="container text-center">
+    <h2>🐾 About MiawShoes 🐾</h2>
+    <p class="mt-3" style="max-width:800px; margin:auto; line-height:1.8; color:#5a3b28;">
+      <strong>MiawShoes</strong> hadir sebagai brand sepatu lokal yang menggabungkan keanggunan, kenyamanan, dan gaya unik terinspirasi dari kelincahan kucing. 
+      Kami percaya bahwa setiap langkah harus terasa ringan dan penuh percaya diri — seperti gerakan anggun seekor kucing yang tenang namun penuh pesona.
+    </p>
+
+    <p style="max-width:800px; margin:auto; line-height:1.8; color:#5a3b28;">
+      Setiap koleksi kami dirancang dengan bahan berkualitas tinggi, perhatian pada detail, dan sentuhan desain modern yang cocok untuk aktivitas harian maupun acara spesial. 
+      Mulai dari sneakers kasual hingga slip-on elegan, setiap pasang <em>MiawShoes</em> dibuat untuk memberikan kenyamanan maksimal tanpa mengorbankan gaya.
+    </p>
+
+    <p style="max-width:800px; margin:auto; line-height:1.8; color:#5a3b28;">
+      Kami juga berkomitmen terhadap keberlanjutan — sebagian besar material yang kami gunakan ramah lingkungan dan diproduksi secara etis. 
+      Dengan <strong>MiawShoes</strong>, kamu tidak hanya melangkah dengan nyaman, tetapi juga berkontribusi untuk masa depan yang lebih baik.
+    </p>
+
+    <img src="assets/img/onitsuka.jpg" alt="About MiawShoes" class="img-fluid rounded shadow mt-4" style="max-width:650px; border-radius:25px;">
+  </div>
+</section>
+
+
+<!-- Collection Section -->
+<section id="collection" class="py-5">
+  <div class="container">
+    <h2>🐾 Best Collection 👟</h2>
+    <div class="row g-4">
+      <!-- Product Card 1 -->
+      <div class="col-md-4">
+        <div class="card product-card">
+          <img src="assets/img/shoe1.jpg" alt="Miau Comfort Sneakers">
+          <div class="product-info">
+            <h5>Miau Comfort Sneakers</h5>
+            <p>Ringan, fleksibel, dan nyaman untuk aktivitas harianmu.</p>
+            <a href="product-detail.html?product=catstep-classic" class="btn">View Details</a>
+          </div>
+        </div>
+      </div>
+      <!-- Product Card 2 -->
+      <div class="col-md-4">
+        <div class="card product-card">
+          <img src="assets/img/shoe2.jpg" alt="Urban Paw Slip-On">
+          <div class="product-info">
+            <h5>Urban Paw Slip-On</h5>
+            <p>Desain modern tanpa tali, pas untuk gaya santai.</p>
+            <a href="product-detail.html?product=pawlite-runner" class="btn">View Details</a>
+          </div>
+        </div>
+      </div>
+      <!-- Product Card 3 -->
+      <div class="col-md-4">
+        <div class="card product-card">
+          <img src="assets/img/shoe3.jpg" alt="Classic Whisker Shoes">
+          <div class="product-info">
+            <h5>Classic Whisker Shoes</h5>
+            <p>Klasik namun elegan — cocok untuk berbagai acara.</p>
+            <a href="product-detail.html?product=whisker-walk" class="btn">View Details</a>
+          </div>
+        </div>
+      </div>
+      <!-- Tombol Product Lainnya -->
+<div class="text-center mt-4">
+  <a href="collection.html" class="btn btn-outline-dark px-4 py-2" 
+     style="border-radius:30px; background:#fff7ef; color:#8b5e3c; font-weight:600; transition:0.3s;">
+    🛍️ Lihat Produk Lainnya
+  </a>
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials" class="py-5" style="background:#fffaf2;">
+  <div class="container">
+    <h2 class="text-center mb-5" style="font-family:'Playfair Display', serif; color:#8b5e3c;">What Our Customers Say 🐾</h2>
+    <div class="row g-4 justify-content-center">
+
+      <!-- Testimoni 4 -->
+      <div class="col-md-4">
+        <div class="testimonial-card p-4 shadow-sm rounded-4" style="background:#fff; border: 1px solid #f1e3d4; transition: transform 0.3s;">
+          <p style="font-style:italic; color:#4b2e1e;">“Kualitasnya luar biasa, bahkan lebih bagus dari foto di web!”</p>
+          <h6 style="color:#8b5e3c; text-align:right; margin-top:15px;">— Tomo, Bandung</h6>
+        </div>
+      </div>
+
+      <!-- Testimoni 5 -->
+      <div class="col-md-4">
+        <div class="testimonial-card p-4 shadow-sm rounded-4" style="background:#fff; border: 1px solid #f1e3d4; transition: transform 0.3s;">
+          <p style="font-style:italic; color:#4b2e1e;">“Ringan, stylish, dan super nyaman — recommended banget!”</p>
+          <h6 style="color:#8b5e3c; text-align:right; margin-top:15px;">— Otsuka, Tokyo</h6>
+        </div>
+      </div>
+
+      <!-- Testimoni 6 -->
+      <div class="col-md-4">
+        <div class="testimonial-card p-4 shadow-sm rounded-4" style="background:#fff; border: 1px solid #f1e3d4; transition: transform 0.3s;">
+          <p style="font-style:italic; color:#4b2e1e;">“Sempurna buat dipakai kerja atau jalan santai. Love it 💖”</p>
+          <h6 style="color:#8b5e3c; text-align:right; margin-top:15px;">— Jerome, Bali</h6>
+        </div>
+      </div>
+
+      <!-- Testimoni 7 -->
+      <div class="col-md-4">
+        <div class="testimonial-card p-4 shadow-sm rounded-4" style="background:#fff; border: 1px solid #f1e3d4; transition: transform 0.3s;">
+          <p style="font-style:italic; color:#4b2e1e;">“Dapet banyak pujian dari temen-temen, desainnya unik banget.”</p>
+          <h6 style="color:#8b5e3c; text-align:right; margin-top:15px;">— Yusue, Surabaya</h6>
+        </div>
+      </div>
+
+      <!-- Testimoni 8 -->
+      <div class="col-md-4">
+        <div class="testimonial-card p-4 shadow-sm rounded-4" style="background:#fff; border: 1px solid #f1e3d4; transition: transform 0.3s;">
+          <p style="font-style:italic; color:#4b2e1e;">“Teksturnya lembut tapi kuat. Kualitas premium di harga terjangkau.”</p>
+          <h6 style="color:#8b5e3c; text-align:right; margin-top:15px;">— Hitomi, Kyoto</h6>
+        </div>
+      </div>
+
+      <!-- Testimoni 9 -->
+      <div class="col-md-4">
+        <div class="testimonial-card p-4 shadow-sm rounded-4" style="background:#fff; border: 1px solid #f1e3d4; transition: transform 0.3s;">
+          <p style="font-style:italic; color:#4b2e1e;">“Packing rapi, pengiriman cepat, dan sepatunya pas banget di kaki.”</p>
+          <h6 style="color:#8b5e3c; text-align:right; margin-top:15px;">— Baale, Singapore</h6>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Tambahkan efek hover ringan -->
+<style>
+  .testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  }
+</style>
+
+
+<!-- Footer --> <footer id="contact" style="background:#4b2e1e; color:#fff; padding:60px 0 30px; position:relative; font-family:'Poppins', sans-serif;"> <div class="container"> <div class="row text-center text-md-start g-4">
+<!-- Get in Touch --> <div class="col-md-4"> <h3 style="color:#e8b47a; font-family:'Playfair Display', serif; margin-bottom:20px;">Get in Touch</h3> <ul class="list-unstyled" style="padding:0; margin:0;"> <li style="margin-bottom:8px;"> <i class="fa-solid fa-envelope" style="color:#e8b47a; width:22px;"></i> <a href="mailto:hello@miawshoes.com" style="color:#fff; text-decoration:none;">hello@miawshoes.com</a> </li> <li style="margin-bottom:8px;"> <i class="fa-brands fa-instagram" style="color:#e8b47a; width:22px;"></i> <a href="https://www.instagram.com/keyyy.la29?igsh=MWloM2Y1NGk3anhpMw==" target="_blank" style="color:#fff; text-decoration:none;">@miawshoes.id</a> </li> <li style="margin-bottom:8px;"> <i class="fa-brands fa-tiktok" style="color:#e8b47a; width:22px;"></i> <a href="https://www.tiktok.com/@keiilaakr?_t=ZS-90wGgmQmcir&_r=1" target="_blank" style="color:#fff; text-decoration:none;">@miawshoes.id</a> </li> <li style="margin-bottom:8px;"> <i class="fa-brands fa-facebook" style="color:#e8b47a; width:22px;"></i> <a href="https://facebook.com/miawshoes" target="_blank" style="color:#fff; text-decoration:none;">MiawShoes</a> </li> <li style="margin-bottom:8px;"> <i class="fa-brands fa-whatsapp" style="color:#e8b47a; width:22px;"></i> <a href="https://wa.me/62895369266142" target="_blank" style="color:#fff; text-decoration:none;">+62 895-3692-66142</a> </li> <li> <i class="fa-solid fa-location-dot" style="color:#e8b47a; width:22px;"></i> <span style="color:#fff;">Jl. Mawar No.12, Bandung, Indonesia</span> </li> </ul> </div>
+      <!-- Quick Links -->
+      <div class="col-md-2">
+        <h5 style="color:#e8b47a; margin-bottom:15px;">Quick Links</h5>
+        <ul class="list-unstyled mt-3">
+          <li><a href="#home" class="footer-link">Home</a></li>
+          <li><a href="#about" class="footer-link">About</a></li>
+          <li><a href="#collection" class="footer-link">Collection</a></li>
+          <li><a href="#testimonials" class="footer-link">Reviews</a></li>
+          <li><a href="#contact" class="footer-link">Contact</a></li>
+        </ul>
+      </div>
+      <!-- Subscribe -->
+      <div class="col-md-6">
+        <h5 style="color:#e8b47a; margin-bottom:15px;">Subscribe</h5>
+        <p style="font-size:14px; color:#c9b59f;">Join our newsletter for updates & special offers 💌</p>
+        <form class="d-flex flex-column flex-sm-row gap-2 mt-3">
+          <input type="email" placeholder="Enter your email" style="flex:1; padding:12px 18px; border-radius:25px; border:none; outline:none; font-size:14px;">
+          <button type="submit" style="padding:12px 25px; border-radius:25px; border:none; background:#e8b47a; color:#4b2e1e; font-weight:600; transition:0.3s;">Subscribe</button>
+        </form>
+      </div>
+    </div>
+
+    <hr style="border-color: rgba(255,255,255,0.2); margin:40px 0;">
+    <div class="text-center" style="color:#c9b59f; font-size:14px;">
+      &copy; 2025 <strong>MiawShoes</strong>. All rights reserved.<br>
+      <small>Designed with 🤎 by <strong>Aulia Kaila Rohmah</strong></small>
+    </div>
+  </div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Smooth Scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+  // Back to Top Button
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    backToTop.style.display = window.scrollY > 300 ? 'flex' : 'none';
+  });
+
+  // Cart Popup
+  const cartToggle = document.getElementById('cartIcon');
+  const cartPopup = document.getElementById('cartPopup');
+  cartToggle.addEventListener('click', e => {
+    e.preventDefault();
+    cartPopup.style.display = cartPopup.style.display === 'block' ? 'none' : 'block';
+  });
+  document.addEventListener('click', e => {
+    if (!cartPopup.contains(e.target) && !cartToggle.contains(e.target)) {
+      cartPopup.style.display = 'none';
+    }
+  });
+
+  // ✅ FIXED CART SYSTEM
+  const cartItemsContainer = cartPopup.querySelector('.cart-items');
+  const cartTotalElem = document.getElementById('cartTotal');
+  const cartCountElem = document.getElementById('cart-count');
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  function updateCart() {
+    cartItemsContainer.innerHTML = '';
+    let total = 0;
+    cart.forEach(item => {
+      total += item.price * item.qty;
+      const div = document.createElement('div');
+      div.className = 'cart-item';
+      div.innerHTML = `
+        <img src="${item.img}" alt="${item.name}">
+        <div>
+          ${item.name} x ${item.qty} <br>
+          Rp ${(item.price * item.qty).toLocaleString()}
+        </div>
+      `;
+      cartItemsContainer.appendChild(div);
+    });
+    cartTotalElem.innerText = total.toLocaleString();
+    cartCountElem.innerText = cart.reduce((sum, i) => sum + i.qty, 0);
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+  updateCart();
+
+  window.addEventListener('storage', updateCart);
+
+  // Checkout
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', e => {
+      e.preventDefault();
+      cartPopup.style.display = 'none';
+      window.location.href = 'cart.html';
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const navbar = document.querySelector(".navbar");
+    document.body.style.paddingTop = navbar.offsetHeight + "px";
+  });
+</script>
+
+<style>
+  .footer-link { display:block; color:#fff; text-decoration:none; margin-bottom:8px; transition:all 0.3s ease; }
+  .footer-link:hover { color:#e8b47a; transform:translateX(4px); }
+</style>
+</body>
+</html>
