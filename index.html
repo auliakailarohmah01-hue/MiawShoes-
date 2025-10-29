@@ -177,53 +177,105 @@
       to { opacity: 1; transform: translateX(0); }
     }
 
-    /* Header */
-    header.masthead {
-      position:relative;
-      background:url('assets/img/sep.jpg') center/cover no-repeat;
-      height:100vh;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      color:white;
-    }
-    header.masthead::before {
-      content:'';
-      position:absolute;
-      inset:0;
-      background:rgba(0,0,0,0.35);
-    }
-    header h1 {
-      font-family:'Playfair Display', serif;
-      font-size:4rem;
-      letter-spacing:2px;
-      position:relative;
-      z-index:1;
-    }
-    header p {
-      position:relative;
-      z-index:1;
-      max-width:300px;
-      font-size:1.2rem;
-      margin:20px auto 30px auto;
-    }
-    header .btn-primary {
-      z-index:1;
-      background:linear-gradient(45deg,#d6a56b,#8b5e3c);
-      border:none;
-      padding:12px 28px;
-      border-radius:25px;
-      font-weight:100;
-      color:#fff;
-      transition:0.3s;
-    }
-    header .btn-primary:hover {
-      transform:translateY(-3px);
-      background:linear-gradient(45deg,#8b5e3c,#d6a56b);
-      box-shadow:0 6px 20px rgba(214,165,107,0.4);
-    }
+/* ===== HEADER (MASTHEAD) ===== */
+header.masthead {
+  position: relative;
+  background: url('assets/img/sep.jpg') center/cover no-repeat;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  padding: 0 20px;
+}
+
+header.masthead::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* === TEXT STYLING === */
+header h1 {
+  position: relative;
+  z-index: 1;
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+
+header p {
+  position: relative;
+  z-index: 1;
+  max-width: 500px;
+  font-size: 1.2rem;
+  margin: 20px auto 30px auto;
+  line-height: 1.6;
+}
+
+/* === BUTTON STYLING === */
+header .btn-primary {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(45deg, #d6a56b, #8b5e3c);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 25px;
+  font-weight: 500;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+header .btn-primary:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(45deg, #8b5e3c, #d6a56b);
+  box-shadow: 0 6px 20px rgba(214, 165, 107, 0.4);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 992px) {
+  header h1 {
+    font-size: 3rem;
+  }
+
+  header p {
+    font-size: 1rem;
+    max-width: 400px;
+  }
+
+  header .btn-primary {
+    padding: 10px 24px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 576px) {
+  header.masthead {
+    height: 90vh;
+    padding: 0 15px;
+  }
+
+  header h1 {
+    font-size: 2.3rem;
+    letter-spacing: 1px;
+  }
+
+  header p {
+    font-size: 0.95rem;
+    max-width: 90%;
+    margin: 15px auto 25px auto;
+  }
+
+  header .btn-primary {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
 
     /* Product */
     .product-card {
